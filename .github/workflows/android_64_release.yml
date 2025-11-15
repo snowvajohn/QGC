@@ -48,6 +48,10 @@ jobs:
           modules:      qtcharts
           setup-python: true
 
+      - name: Install Android SDK/NDK 21.3
+        run: |
+          yes | sdkmanager "platforms;android-31" "ndk;21.3.6528147"
+
       - name: Install ccache
         run:  sudo apt-get install ccache
 
@@ -99,6 +103,7 @@ jobs:
         working-directory: ${{ runner.temp }}/shadow_build_dir
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_NDK_ROOT: $ANDROID_HOME/ndk/21.3.6528147
         run:  |
             qmake -r ${SOURCE_DIR}/qgroundcontrol.pro -spec android-clang CONFIG+=${BUILD_TYPE} CONFIG+=installer ANDROID_ABIS="arm64-v8a"
             make -j2
