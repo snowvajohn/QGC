@@ -64,9 +64,7 @@ jobs:
     
         # ระบุ SDK build tools version (อาจจะไม่จำเป็นถ้าใช้ Image มาตรฐาน)
         # build-tools: 34.0.0
-      - name: Accept SDK Licenses
-        # Action ตัวนี้จะจัดการ accept licenses ให้ทันที ไม่ต้อง echo y | sdkmanager อีก
-        uses: android-actions/accept-android-sdk-licenses@v1
+
       # - name: Install Android SDK cmdline-tools + NDK 21.3
       #   run: |
       #     sudo apt-get update
@@ -83,9 +81,9 @@ jobs:
 
       #     sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
 
-      # - name: Accept Android SDK licenses
-      #   run: python3 -c "import sys; sys.stdout.write('y\\n' * 10); sys.stdout.flush()" | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses
-      #   shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+      - name: Accept Android SDK licenses
+        run: python3 -c "import sys; sys.stdout.write('y\\n' * 10); sys.stdout.flush()" | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses
+        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
 
       - name: Install ccache
         run:  sudo apt-get install ccache
