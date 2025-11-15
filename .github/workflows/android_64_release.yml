@@ -51,8 +51,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-        distribution: 'temurin'
-        java-version: '11' # ใช้ Java 11 หรือ 17 สำหรับ Android สมัยใหม่
+          distribution: 'temurin'
+          java-version: '11' # ใช้ Java 11 หรือ 17 สำหรับ Android สมัยใหม่
 
       - name: Setup Android SDK and NDK
         uses: android-actions/setup-android@v3
