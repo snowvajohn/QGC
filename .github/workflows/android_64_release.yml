@@ -49,9 +49,9 @@ jobs:
           setup-python: true
     
       - name: Setup Android NDK
-        uses: android-ndk/setup-ndk@v1 # Use the appropriate version
+        uses: nttld/setup-ndk@v1
         with:
-          ndk-version: r23b # Specify the NDK version you need
+        ndk-version: r21e   # ตรงกับ 21.3.6528147
 
       # - name: Install Android SDK cmdline-tools + NDK 21.3
       #   run: |
