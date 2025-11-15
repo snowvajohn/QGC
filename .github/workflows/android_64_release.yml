@@ -58,13 +58,15 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
         # ระบุ NDK version ที่ต้องการ (เช่น 21.3.6528147 ตามที่คุณใช้)
-        ndk-version: 21.3.6528147 
+          ndk-version: 21.3.6528147 
         # หรือใช้เวอร์ชันล่าสุด
         # ndk-version: latest
     
         # ระบุ SDK build tools version (อาจจะไม่จำเป็นถ้าใช้ Image มาตรฐาน)
         # build-tools: 34.0.0
-
+      - name: Accept SDK Licenses
+        # Action ตัวนี้จะจัดการ accept licenses ให้ทันที ไม่ต้อง echo y | sdkmanager อีก
+        uses: android-actions/accept-android-sdk-licenses@v1
       # - name: Install Android SDK cmdline-tools + NDK 21.3
       #   run: |
       #     sudo apt-get update
