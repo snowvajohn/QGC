@@ -48,10 +48,11 @@ jobs:
           modules:      qtcharts
           setup-python: true
 
-      - name: Install Android SDK & NDK 21.3
+      - name: Install Android SDK cmdline-tools + NDK 21.3
         run: |
           sudo apt-get update
-          sudo apt-get install -y unzip wget
+          sudo apt-get install -y unzip wget coreutils
+
           mkdir -p $HOME/android/cmdline-tools
           cd $HOME/android/cmdline-tools
           wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
@@ -61,10 +62,11 @@ jobs:
           export ANDROID_SDK_ROOT=$HOME/android
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
 
-          sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
+          # ติดตั้ง Platform SDK และ NDK
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
 
       - name: Accept Android SDK licenses
-        run: yes | sdkmanager --licenses
+        run: yes | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses
         env:
           ANDROID_SDK_ROOT: $HOME/android
           PATH: $HOME/android/cmdline-tools/latest/bin:$PATH
