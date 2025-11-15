@@ -65,9 +65,8 @@ jobs:
           sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
 
       - name: Accept Android SDK licenses
-        run: echo "y" | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses
-        # เพิ่มบรรทัดนี้เพื่อบังคับใช้ bash แทน sh ที่หายไป
-        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0} 
+        run: python3 -c "import sys; sys.stdout.write('y\\n' * 10); sys.stdout.flush()" | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses
+        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
 
       - name: Install ccache
         run:  sudo apt-get install ccache
