@@ -66,6 +66,7 @@ jobs:
 
       - name: Accept Android SDK licenses
         run: echo y | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses
+        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
         env:
           ANDROID_SDK_ROOT: $HOME/android
           PATH: $HOME/android/cmdline-tools/latest/bin:$PATH
