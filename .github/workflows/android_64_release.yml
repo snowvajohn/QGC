@@ -119,9 +119,9 @@ jobs:
         working-directory: ${{ runner.temp }}/shadow_build_dir
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_SDK_ROOT: ${HOME}/android
-          ANDROID_NDK_ROOT: ${HOME}/android/ndk/21.3.6528147
-          PATH: ${HOME}/android/cmdline-tools/latest/bin:$PATH
+          ANDROID_SDK_ROOT: $HOME/android
+          ANDROID_NDK_ROOT: $HOME/android/ndk/21.3.6528147
+          PATH: $HOME/android/cmdline-tools/latest/bin:$PATH
         run:  |
             echo "ANDROID_SDK_ROOT=/home/runner/android" >> $GITHUB_ENV
             echo "ANDROID_NDK_ROOT=/home/runner/android/ndk/21.3.6528147" >> $GITHUB_ENV
