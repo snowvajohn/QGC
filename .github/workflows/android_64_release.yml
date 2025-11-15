@@ -62,7 +62,7 @@ jobs:
           export ANDROID_SDK_ROOT=$HOME/android
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
 
-          yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
+          yes 2>/dev/null | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
 
       # - name: Accept Android SDK licenses
       #   run: /usr/bin/bash -c "echo 'y' | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses"
