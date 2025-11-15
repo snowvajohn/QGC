@@ -47,26 +47,31 @@ jobs:
           dir:          ${{ runner.temp }}
           modules:      qtcharts
           setup-python: true
+    
+      - name: Setup Android NDK
+        uses: android-ndk/setup-ndk@v1 # Use the appropriate version
+        with:
+          ndk-version: r23b # Specify the NDK version you need
 
-      - name: Install Android SDK cmdline-tools + NDK 21.3
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y unzip wget coreutils
+      # - name: Install Android SDK cmdline-tools + NDK 21.3
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y unzip wget coreutils
 
-          mkdir -p $HOME/android/cmdline-tools
-          cd $HOME/android/cmdline-tools
-          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
-          unzip cmdline-tools.zip
-          mv cmdline-tools latest
+      #     mkdir -p $HOME/android/cmdline-tools
+      #     cd $HOME/android/cmdline-tools
+      #     wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
+      #     unzip cmdline-tools.zip
+      #     mv cmdline-tools latest
 
-          export ANDROID_SDK_ROOT=$HOME/android
-          export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
+      #     export ANDROID_SDK_ROOT=$HOME/android
+      #     export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
 
-          sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
+      #     sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
 
-      - name: Accept Android SDK licenses
-        run: python3 -c "import sys; sys.stdout.write('y\\n' * 10); sys.stdout.flush()" | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses
-        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+      # - name: Accept Android SDK licenses
+      #   run: python3 -c "import sys; sys.stdout.write('y\\n' * 10); sys.stdout.flush()" | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses
+      #   shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
 
       - name: Install ccache
         run:  sudo apt-get install ccache
@@ -120,10 +125,6 @@ jobs:
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         run:  |
-            export ANDROID_SDK_ROOT=/home/runner/android
-            export ANDROID_NDK_ROOT=/home/runner/android/ndk/21.3.6528147
-            # export PATH ก่อนเรียก sdkmanager หรือ qmake
-            export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
             qmake -r ${SOURCE_DIR}/qgroundcontrol.pro -spec android-clang CONFIG+=${BUILD_TYPE} CONFIG+=installer ANDROID_ABIS="arm64-v8a"
             make -j2
 
