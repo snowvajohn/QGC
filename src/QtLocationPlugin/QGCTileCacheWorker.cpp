@@ -484,6 +484,7 @@ QGCCacheWorker::_createTileSet(QGCMapTask *mtask)
     if(_valid) {
         //-- Create Tile Set
         quint32 actual_count = 0;
+        Q_UNUSED(actual_count);
         QGCCreateTileSetTask* task = static_cast<QGCCreateTileSetTask*>(mtask);
         QSqlQuery query(*_db);
         query.prepare("INSERT INTO TileSets("
@@ -508,6 +509,7 @@ QGCCacheWorker::_createTileSet(QGCMapTask *mtask)
             task->tileSet()->setId(setID);
             //-- Prepare Download List
             quint64 tileCount = 0;
+            Q_UNUSED(tileCount);
             _db->transaction();
             for(int z = task->tileSet()->minZoom(); z <= task->tileSet()->maxZoom(); z++) {
                 QGCTileSet set = QGCMapEngine::getTileCount(z,
