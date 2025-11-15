@@ -48,10 +48,13 @@ jobs:
           modules:      qtcharts
           setup-python: true
     
-      - name: Setup Android NDK
-        uses: nttld/setup-ndk@v1
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install NDK
+        uses: android-actions/setup-ndk@v3
         with:
-        ndk-version: "r21e LTS"   # ตรงกับ 21.3.6528147
+          ndk-version: r23e
 
       # - name: Install Android SDK cmdline-tools + NDK 21.3
       #   run: |
