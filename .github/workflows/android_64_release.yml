@@ -59,10 +59,11 @@ jobs:
           mv cmdline-tools latest
           export ANDROID_SDK_ROOT=$HOME/android
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
-          
-      - name: Install Android NDK 21.3
+
+      - name: Install Android SDK 31 & NDK 21.3
         run: |
-          yes | sdkmanager "ndk;21.3.6528147"
+          yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
+          export ANDROID_NDK_ROOT=$ANDROID_SDK_ROOT/ndk/21.3.6528147
 
       - name: Install ccache
         run:  sudo apt-get install ccache
