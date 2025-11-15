@@ -137,7 +137,9 @@ jobs:
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         run:  |
-            qmake -r ${SOURCE_DIR}/qgroundcontrol.pro -spec android-clang CONFIG+=${BUILD_TYPE} CONFIG+=installer ANDROID_ABIS="arm64-v8a" QMAKE_CXXFLAGS+=" -Wno-unused-but-set-variable" QMAKE_CFLAGS+=" -Wno-unused-but-set-variable"
+            export CXXFLAGS="${CXXFLAGS} -Wno-unused-but-set-variable"
+            export CFLAGS="${CFLAGS} -Wno-unused-but-set-variable"
+            qmake -r ${SOURCE_DIR}/qgroundcontrol.pro -spec android-clang CONFIG+=${BUILD_TYPE} CONFIG+=installer ANDROID_ABIS="arm64-v8a"
             make -j2
 
       - name: ccache post-run
