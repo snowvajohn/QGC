@@ -57,13 +57,17 @@ jobs:
           wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
           unzip cmdline-tools.zip
           mv cmdline-tools latest
-          
-          # ตั้ง environment variables ภายใน step เดียว
+
           export ANDROID_SDK_ROOT=$HOME/android
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
 
-          # ติดตั้ง platform SDK + NDK
-          yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
+          sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
+
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses
+        env:
+          ANDROID_SDK_ROOT: $HOME/android
+          PATH: $HOME/android/cmdline-tools/latest/bin:$PATH
 
       - name: Install ccache
         run:  sudo apt-get install ccache
