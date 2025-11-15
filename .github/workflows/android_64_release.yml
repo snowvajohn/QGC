@@ -48,9 +48,10 @@ jobs:
           modules:      qtcharts
           setup-python: true
 
-      - name: Install Android SDK/NDK 21.3
-        run: |
-          yes | sdkmanager "platforms;android-31" "ndk;21.3.6528147"
+      - name: Install Android NDK r21
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          ndk-version: 21.3.6528147
 
       - name: Install ccache
         run:  sudo apt-get install ccache
