@@ -48,13 +48,22 @@ jobs:
           modules:      qtcharts
           setup-python: true
     
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install NDK
-        uses: android-actions/setup-ndk@v3
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          ndk-version: r23e
+        distribution: 'temurin'
+        java-version: '11' # ใช้ Java 11 หรือ 17 สำหรับ Android สมัยใหม่
+
+      - name: Setup Android SDK and NDK
+        uses: android-actions/setup-android@v3
+        with:
+        # ระบุ NDK version ที่ต้องการ (เช่น 21.3.6528147 ตามที่คุณใช้)
+        ndk-version: 21.3.6528147 
+        # หรือใช้เวอร์ชันล่าสุด
+        # ndk-version: latest
+    
+        # ระบุ SDK build tools version (อาจจะไม่จำเป็นถ้าใช้ Image มาตรฐาน)
+        # build-tools: 34.0.0
 
       # - name: Install Android SDK cmdline-tools + NDK 21.3
       #   run: |
