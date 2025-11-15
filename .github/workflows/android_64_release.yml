@@ -119,14 +119,11 @@ jobs:
         working-directory: ${{ runner.temp }}/shadow_build_dir
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          # ใช้ Absolute Paths ที่ถูกต้องตามที่ติดตั้งไว้
-          ANDROID_SDK_ROOT: /home/runner/android 
-          ANDROID_NDK_ROOT: /home/runner/android/ndk/21.3.6528147 
-          # ตรวจสอบ PATH ของ SDK Tools ด้วยว่าตรงกันไหม
-          PATH: /home/runner/android/cmdline-tools/latest/bin:$PATH
         run:  |
-            echo "ANDROID_SDK_ROOT: ${ANDROID_SDK_ROOT}"
-            echo "ANDROID_NDK_ROOT: ${ANDROID_NDK_ROOT}"
+            export ANDROID_SDK_ROOT=/home/runner/android
+            export ANDROID_NDK_ROOT=/home/runner/android/ndk/21.3.6528147
+            # export PATH ก่อนเรียก sdkmanager หรือ qmake
+            export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
             qmake -r ${SOURCE_DIR}/qgroundcontrol.pro -spec android-clang CONFIG+=${BUILD_TYPE} CONFIG+=installer ANDROID_ABIS="arm64-v8a"
             make -j2
 
