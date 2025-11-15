@@ -62,11 +62,10 @@ jobs:
           export ANDROID_SDK_ROOT=$HOME/android
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
 
-          # ติดตั้ง Platform SDK และ NDK
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
+          sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-31" "ndk;21.3.6528147"
 
       - name: Accept Android SDK licenses
-        run: yes | $HOME/android/cmdline-tools/latest/bin/sdkmanager --licenses
+        run: yes | sdkmanager --licenses
         env:
           ANDROID_SDK_ROOT: $HOME/android
           PATH: $HOME/android/cmdline-tools/latest/bin:$PATH
