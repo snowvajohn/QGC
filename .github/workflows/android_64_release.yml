@@ -51,7 +51,7 @@ jobs:
       - name: Setup Android NDK
         uses: nttld/setup-ndk@v1
         with:
-        ndk-version: r21e   # ตรงกับ 21.3.6528147
+        ndk-version: "r21e LTS"   # ตรงกับ 21.3.6528147
 
       # - name: Install Android SDK cmdline-tools + NDK 21.3
       #   run: |
