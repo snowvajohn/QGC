@@ -64,8 +64,13 @@ jobs:
           ndk: 25.2.9519653              # Qt ชอบ NDK r25
           cmake: 3.22.1
       
-      - name: Show SDK packages
-        run: sdkmanager --list
+      - name: Ensure NDK 25.2 installed
+        run: |
+          sdkmanager "ndk;25.2.9519653"
+          sdkmanager --list | grep ndk
+
+      - name: Export NDK path
+        run: echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
 
       - name: Checkout repo
         uses: actions/checkout@v4
