@@ -132,7 +132,7 @@ jobs:
 
       - name: Build
         working-directory: ${{ runner.temp }}/shadow_build_dir
-        env:
+        # env:
           # ANDROID_NDK: ${{ steps.setup-ndk.outputs.ndk-path }}
           # ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
           # ANDROID_NDK_LATEST_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
