@@ -56,7 +56,7 @@ jobs:
       #   with:
       #     ndk-version: r21e
       #     add-to-path: false
-      
+
       - name: Install Android SDK
         uses: android-actions/setup-android@v2
         with:
@@ -68,7 +68,8 @@ jobs:
       - name: Ensure NDK 25.2 installed
         run: |
           sdkmanager "ndk;25.2.9519653"
-          sdkmanager --list | grep ndk
+          sdkmanager "platforms;android-34"
+          sdkmanager --list
 
       - name: Export NDK path
         run: echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
