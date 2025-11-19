@@ -60,8 +60,7 @@ jobs:
       - name: Install Android SDK
         uses: android-actions/setup-android@v2
         with:
-          # api-level: 34                  # ใช้ platform android-34
-          platforms: android-34         # ใช้ platform android-34
+          api-level: 34                  # ใช้ platform android-34
           build-tools: 34.0.0            # ใช้ build-tools 34.0.0
           ndk: 21.3.6528147             # Qt ชอบ NDK r25
           cmake: 3.22.1
@@ -71,6 +70,7 @@ jobs:
           sdkmanager "ndk;21.3.6528147"
           sdkmanager "platforms;android-34"
           sdkmanager --list
+          ls -lah $ANDROID_HOME/platforms
 
       - name: Export NDK path
         run: |
