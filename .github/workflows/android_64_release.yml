@@ -58,7 +58,7 @@ jobs:
       #     add-to-path: false
       - uses: actions/checkout@v4
       - name: Setup Android SDK and API 31
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v2
         with:
           packages: 'platforms;android-31 build-tools;31.0.0 ndk;21.3.6528147'
 
