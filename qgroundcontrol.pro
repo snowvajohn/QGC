@@ -16,9 +16,6 @@ ANDROID_PLATFORM = android-31
 DEFINES += QGC_GST_TAISYNC_DISABLED
 DEFINES += QGC_GST_MICROHARD_DISABLED
 
-QMAKE_CXXFLAGS += -Wno-unused-but-set-variable
-QMAKE_CFLAGS += -Wno-unused-but-set-variable
-
 exists($${OUT_PWD}/qgroundcontrol.pro) {
     error("You must use shadow build (e.g. mkdir build; cd build; qmake ../qgroundcontrol.pro).")
 }
