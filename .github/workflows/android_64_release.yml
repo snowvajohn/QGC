@@ -130,36 +130,6 @@ jobs:
           mkdir -p "${{ runner.temp }}/shadow_build_dir/android-build/libs/arm64-v8a"
           ls -ld "${{ runner.temp }}/shadow_build_dir/android-build/libs" || true
 
-
-      - name: List Installed Android SDK Platforms
-        run: |
-            # 1. Try common locations for Android SDK Root
-            # The ANDROID_NDK environment variable is already set in the subsequent step, 
-            # but ANDROID_HOME or ANDROID_SDK_ROOT is what's usually needed.
-            if [ -z "$ANDROID_SDK_ROOT" ]; then
-                if [ -d "$HOME/Android/Sdk" ]; then
-                    export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
-                elif [ -d "/usr/local/lib/android/sdk" ]; then
-                    export ANDROID_SDK_ROOT="/usr/local/lib/android/sdk"
-                else
-                    echo "Warning: ANDROID_SDK_ROOT not found. Checking the path where setup-ndk places NDK."
-                    # You may need to manually derive the SDK root from your NDK path here if standard paths fail.
-                fi
-            fi
-
-            SDKMANAGER_PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
-
-            if [ -f "$SDKMANAGER_PATH" ]; then
-                echo "--- Installed Android SDK Packages ---"
-                # The --list_installed command is clearer, but --list also shows installed packages
-                yes | $SDKMANAGER_PATH --list
-                echo "--------------------------------------"
-            else
-                echo "Error: sdkmanager not found at $SDKMANAGER_PATH"
-                echo "Falling back to checking the 'platforms' directory contents."
-                find "$ANDROID_SDK_ROOT/platforms" -maxdepth 1 -mindepth 1
-            fi
-            
       - name: Build
         working-directory: ${{ runner.temp }}/shadow_build_dir
         env:
