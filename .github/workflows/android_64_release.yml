@@ -36,12 +36,13 @@ jobs:
 
     steps:
 
-      - name: Free disk space
-        run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+      ##### OLD STEPS INSTALL JAVA 11 AND NDK 21E #####
+      # - name: Free disk space
+      #   run: |
+      #     sudo rm -rf /usr/share/dotnet
+      #     sudo rm -rf /opt/ghc
+      #     sudo rm -rf "/usr/local/share/boost"
+      #     sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 
       - name: Set up JDK 11
         uses: actions/setup-java@v3
@@ -49,18 +50,19 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Verify Java
-        run: |
-          echo "JAVA_HOME=$JAVA_HOME"
-          java -version
-          javac -version
-
-      - uses: actions/checkout@v3
-      - uses: nttld/setup-ndk@v1
-        id: setup-ndk
+      # - uses: actions/checkout@v3
+      # - uses: nttld/setup-ndk@v1
+      #   id: setup-ndk
+      #   with:
+      #     ndk-version: r21e
+      #     add-to-path: false
+      - uses: actions/checkout@v4
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3 # Use the latest version
         with:
-          ndk-version: r21e
-          add-to-path: false
+          api-level: 31 # Specify desired Android API level
+          build-tools: 31.0.0 # Specify desired build tools version
+          ndk: 21.3.6528147
 
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -133,11 +135,10 @@ jobs:
       - name: Build
         working-directory: ${{ runner.temp }}/shadow_build_dir
         env:
-          ANDROID_NDK: ${{ steps.setup-ndk.outputs.ndk-path }}
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-          ANDROID_NDK_LATEST_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-          ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
-          ANDROID_PLATFORM: android-34
+          # ANDROID_NDK: ${{ steps.setup-ndk.outputs.ndk-path }}
+          # ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+          # ANDROID_NDK_LATEST_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+          # ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run:  |
             qmake -r ${SOURCE_DIR}/qgroundcontrol.pro -spec android-clang CONFIG+=${BUILD_TYPE} CONFIG+=installer ANDROID_ABIS="${{ matrix.eabi }}"
             make -j2 apk
