@@ -154,10 +154,16 @@ jobs:
           # ANDROID_NDK_LATEST_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
           # ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run:  |
-            export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/21.3.6528147
-            export ANDROID_PLATFORM=$ANDROID_HOME/platforms/android-34
-            qmake -r ${SOURCE_DIR}/qgroundcontrol.pro -spec android-clang CONFIG+=${BUILD_TYPE} CONFIG+=installer ANDROID_ABIS="${{ matrix.eabi }}"
-            make -j2 apk
+            # export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/21.3.6528147
+            # export ANDROID_PLATFORM=$ANDROID_HOME/platforms/android-34
+            # qmake -r ${SOURCE_DIR}/qgroundcontrol.pro -spec android-clang CONFIG+=${BUILD_TYPE} CONFIG+=installer ANDROID_ABIS="${{ matrix.eabi }}"
+            # make -j2 apk
+            make INSTALL_ROOT=android-build -j2
+            /home/runner/work/_temp/Qt/5.15.2/android/bin/androiddeployqt \
+            --input android-QGroundControl-deployment-settings.json \
+            --output android-build \
+            --android-platform android-34 \
+            --gradle
             mkdir ${{ runner.temp }}/shadow_build_dir/package
             mv ${{ runner.temp }}/shadow_build_dir/android-build/build/outputs/apk/debug/android-build-debug.apk ${{ runner.temp }}/shadow_build_dir/package/${{ matrix.ARTIFACT }}
       - name: ccache post-run
