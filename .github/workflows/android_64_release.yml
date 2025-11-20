@@ -106,6 +106,7 @@ jobs:
         run: |
           string(TIMESTAMP current_date "%Y-%m-%d-%H;%M;%S" UTC)
           message("::set-output name=timestamp::${current_date}")
+
       - name: ccache cache files
         uses: actions/cache@v4
         with:
@@ -153,6 +154,8 @@ jobs:
           # ANDROID_NDK_LATEST_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
           # ANDROID_NDK_ROOT: ${{ steps.setup-ndk.outputs.ndk-path }}
         run:  |
+            export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/21.3.6528147
+            export ANDROID_PLATFORM=$ANDROID_HOME/platforms/android-34
             qmake -r ${SOURCE_DIR}/qgroundcontrol.pro -spec android-clang CONFIG+=${BUILD_TYPE} CONFIG+=installer ANDROID_ABIS="${{ matrix.eabi }}"
             make -j2 apk
             mkdir ${{ runner.temp }}/shadow_build_dir/package
