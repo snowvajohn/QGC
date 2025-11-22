@@ -61,9 +61,9 @@ jobs:
         with:
           cmdline-tools-version: 8512546
 
-      - name: Install platform 29
+      - name: Install platform 26
         run: |
-          sdkmanager "platforms;android-29"
+          sdkmanager "platforms;android-26"
 
       - name: Install Android NDK
         uses: nttld/setup-ndk@v1
