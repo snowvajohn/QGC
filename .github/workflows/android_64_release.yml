@@ -52,6 +52,12 @@ jobs:
           distribution: 'temurin'
           java-version: '8'
 
+      - name: Print Java version
+        run: java -version
+
+      - name: Print JAVA_HOME
+        run: echo "JAVA_HOME=$JAVA_HOME"
+
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
